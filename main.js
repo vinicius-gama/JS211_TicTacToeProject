@@ -32,30 +32,86 @@ const printBoard = () => {
   console.log('2 ' + board[2].join(' | '));
 }
 
-const horizontalWin = () => {
+const horizontalWin = (board) => {
+  if (
+		(board[0][0] == 'X' && board[0][1] == 'X' && board[0][2] == 'X') ||
+		(board[1][0] == 'X' && board[1][1] == 'X' && board[1][2] == 'X') ||
+		(board[2][0] == 'X' && board[2][1] == 'X' && board[2][2] == 'X') ||
+		(board[0][0] == 'O' && board[0][1] == 'O' && board[0][2] == 'O') ||
+		(board[1][0] == 'O' && board[1][1] == 'O' && board[1][2] == 'O') ||
+		(board[2][0] == 'O' && board[2][1] == 'O' && board[2][2] == 'O')
+	)
+		return true;
+
+
+
   // Your code here to check for horizontal wins
 }
 
 const verticalWin = () => {
+  if (
+		(board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X') ||
+		(board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X') ||
+		(board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X') ||
+		(board[0][0] == 'O' && board[1][0] == 'O' && board[2][0] == 'O') ||
+		(board[0][1] == 'O' && board[1][1] == 'O' && board[2][1] == 'O') ||
+		(board[0][2] == 'O' && board[1][2] == 'O' && board[2][2] == 'O')
+	)
+		return true;
+
   // Your code here to check for vertical wins
 }
 
 const diagonalWin = () => {
+  if (
+		(board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X') ||
+		(board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X') ||
+		(board[0][0] == 'O' && board[1][1] == 'O' && board[2][2] == 'O') ||
+		(board[0][0] == 'O' && board[1][1] == 'O' && board[2][0] == 'O')
+	)
+		return true;
+
   // Your code here to check for diagonal wins
 }
 
 const checkForWin = () => {
+  if(horizontalWin() || diagonalWin() || verticalWin()){
+    return true
+    }
+    else {
+      return false
+    }
+  }
+  
   // Your code here call each of the check for types of wins
+
+const changeInput = () =>
+{
+  if (playerTurn === "X") {
+    playerTurn = "O";
+  } else {
+    playerTurn = "X";
+  }
 }
 
+
 const ticTacToe = (row, column) => {
+  if(board[row][column] == ' '){
+    board[row][column] = playerTurn
+    if (checkForWin()) {
+      console.log ('U win')
+    }
+    else changeInput()
+  } else {
+    console.log("Used space")
+  }
   // Your code here to place a marker on the board
   // then check for a win
 }
 
 const getPrompt = () => {
   printBoard();
-  console.log("It's Player " + playerTurn + "'s turn.");
+  console.log("Player " + playerTurn + "turn");
   rl.question('row: ', (row) => {
     rl.question('column: ', (column) => {
       ticTacToe(row, column);
